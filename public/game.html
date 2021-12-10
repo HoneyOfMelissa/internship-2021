@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/stylesheet.css" />
+    <link rel="stylesheet" href="./css/game.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>インターンシップ 2022</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="blackboard">
+        <h1 class="text-center">ひとり〇×ゲーム</h1>
+      </header>
+    </div>
+
+    <main id="main" class="container">
+      <div class="row align-items-center">
+        <div id="player1" class="col-2">
+          <img id="img-player1" class="player-img-size">
+
+          <div class="blackboard">
+            <p class="lead text-skyblue text-center mb-0">先行</>
+          </div>
+        </div>
+
+        <div class="col-8 bg-blackboard">
+          <table class="game-board">
+            <tbody>
+              <tr>
+                <td id="r1c1" class="game-cell r1c1"></td>
+                <td id="r1c2" class="game-cell r1c2"></td>
+                <td id="r1c3" class="game-cell r1c3"></td>
+              </tr>
+              <tr>
+                <td id="r2c1" class="game-cell r2c1"></td>
+                <td id="r2c2" class="game-cell r2c2"></td>
+                <td id="r2c3" class="game-cell r2c3"></td>
+              </tr>
+              <tr>
+                <td id="r3c1" class="game-cell r3c1"></td>
+                <td id="r3c2" class="game-cell r3c2"></td>
+                <td id="r3c3" class="game-cell r3c3"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="player2" class="col-2">
+          <img id="img-player2" class="player-img-size">
+
+          <div class="blackboard">
+            <p class="lead text-pink text-center mb-0">後攻</>
+          </div>
+        </div>
+      </div>
+
+      <div class="container blackboard">
+        <p id="info" class="info text-center"></p>
+      </div>
+    </main>
+
+    <script src="./js/game.js"></script>
+  </body>
+</html>

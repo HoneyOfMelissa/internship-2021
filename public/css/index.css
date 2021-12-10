@@ -1,0 +1,23 @@
+a {
+  display: inline-block;
+}
+
+a::after {
+  content: '';
+  display: block;
+  width: 0;
+  transition: width 0.1s;
+  border-bottom: 1px solid skyblue;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  color: skyblue;
+}
+
+a:hover::after {
+  width: 100%;
+}

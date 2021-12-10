@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Chalk-JP';
+  src: url('../font/Chalk-JP.otf') format('truetype');
+}
+
+body {
+  background: green;
+  height: 100%;
+  font-family: 'Chalk-JP';
+}
+
+.blackboard {
+  color: #fff;
+  background-color: #114400;
+  padding: 10px;
+  border: 9px solid #a60;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px #666, 2px 2px 2px #111 inset;
+  text-shadow: 0px 0px 2px #000;
+  line-height: 1.9;
+}
+
+.bg-blackboard {
+  background-image: url('../images/blackboard.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 525px;
+}
+
+.player-img-size {
+  width: 100%;
+  height: auto;
+}
+
+.text-skyblue {
+  color: skyblue;
+}
+
+.text-pink {
+  color: pink;
+}
