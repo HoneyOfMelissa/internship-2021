@@ -1,8 +1,9 @@
-const player1 = 0;  // 先行
-const player2 = 1;   // 後攻
+const player1st = "先行";
+const player2nd = "後攻";
 
-const playerInfomations = [
-  {
+// プレイヤー情報
+const playerInfomations = {
+  "先行" : {
     mark: '〇',
     color: 'text-skyblue',
     image: {
@@ -11,7 +12,7 @@ const playerInfomations = [
       lose: './images/face_man_lose.png'
     }
   },
-  {
+  "後攻" : {
     mark: '×',
     color: 'text-pink',
     image: {
@@ -20,9 +21,10 @@ const playerInfomations = [
       lose: './images/face_woman_lose.png'
     }
   }
-];
+};
 
 // 勝利判定マップ(最後にマークされた場所に関連するセルを列挙)
+// r => row, c => column
 const victoryJudgeMap = {
   "r1c1": [
     ["r1c1", "r1c2", "r1c3"],  // →
@@ -68,8 +70,13 @@ const victoryJudgeMap = {
   ]
 }
 
-let player = player1;
+// 手番プレイヤー
+let ternPlayer = player1st;
+
+// ゲーム終了フラグ
 let isGameOver = false;
+
+// 引き分けカウンター
 let drawCounter = 9;
 
 // ウィンドウが読み込まれたときに実行する処理
@@ -139,11 +146,11 @@ const init = function() {
   initCell(cell);
 
   // プレイヤーに画像を設定する
-  $('#img-player1').attr('src', playerInfomations[player1].image.normal);
-  $('#img-player2').attr('src', playerInfomations[player2].image.normal);
+  $('#img-player1').attr('src', playerInfomations[player1st].image.normal);
+  $('#img-player2').attr('src', playerInfomations[player2nd].image.normal);
 
   // プレイヤーを先行にする
-  player = player1;
+  ternPlayer = player1st;
 
   // ゲーム終了フラグを倒す
   isGameOver = false;
@@ -156,11 +163,14 @@ const init = function() {
 }
 
 // セルの初期化処理
+// 
+// @param cell 〇×ゲームのマス
 const initCell = function(cell) {
   cell.attr('data-mark', '');
 }
 
-const onClickCellHandler = function () {
+// セルをクリックしたときに実行する処理
+const onClickCellHandler = function() {
   // ゲーム終了後はマークできない
   if (isGameOver) {
     return;
@@ -172,29 +182,29 @@ const onClickCellHandler = function () {
   }
 
   // マークを付ける
-  $(this).attr('data-mark', playerInfomations[player].mark);
-  $(this).addClass(playerInfomations[player].color);
+  $(this).attr('data-mark', playerInfomations[ternPlayer].mark);
+  $(this).addClass(playerInfomations[ternPlayer].color);
 
   // 勝利判定
-  if(judgeVictory($(this).attr('id'))) {
+  if(isVictory($(this).attr('id'))) {
     isGameOver = true;
     $('#main').addClass('bg-confetti');
-    if (player === player1) {
+
+    if (ternPlayer === player1st) {
       $('#info').text('先行の勝利です!!');
-      $('#img-player1').attr('src', playerInfomations[player1].image.win);
-      $('#img-player2').attr('src', playerInfomations[player2].image.lose);
+      $('#img-player1').attr('src', playerInfomations[player1st].image.win);
+      $('#img-player2').attr('src', playerInfomations[player2nd].image.lose);
     }
     else {
       $('#info').text('後攻の勝利です!!');
-      $('#img-player1').attr('src', playerInfomations[player1].image.lose);
-      $('#img-player2').attr('src', playerInfomations[player2].image.win);
+      $('#img-player1').attr('src', playerInfomations[player1st].image.lose);
+      $('#img-player2').attr('src', playerInfomations[player2nd].image.win);
     }
-
 
     return; 
   }
 
-  // 勝敗が付かない場合は引き分けカウンターを減らす
+  // 勝敗が付いていない場合は引き分けカウンターを減らす
   drawCounter--;
   if (drawCounter <= 0) {
     isGameOver = true;
@@ -207,16 +217,22 @@ const onClickCellHandler = function () {
   changePlayer();
 }
 
+// プレイヤー交代処理
 const changePlayer = function() {
-  if (player === player1) {
-    player = player2;
+  if (ternPlayer === player1st) {
+    ternPlayer = player2nd;
   }
   else {
-    player = player1;
+    ternPlayer = player1st;
   }
 }
 
-const judgeVictory = function(markedCellId) {
+// 勝利判定
+// 
+// @param markedCellId マークしたセルのID
+// @return boolean 勝敗判定
+const isVictory = function(markedCellId) {
+  // 定義した方向へ勝利判定を繰り返し、1方向でも条件を満たしていれば決着
   return victoryJudgeMap[markedCellId].some(direction => {
     let marks = [];
 
@@ -226,7 +242,7 @@ const judgeVictory = function(markedCellId) {
     });
 
     // 現在のプレイヤーに応じたマークが1方向でも揃っていれば勝利
-    const currentPlayerMark = playerInfomations[player].mark;
+    const currentPlayerMark = playerInfomations[ternPlayer].mark;
     return marks.every((value) => value === currentPlayerMark);
   });
 }
