@@ -1,74 +1,74 @@
-const player1st = "先行";
-const player2nd = "後攻";
+const player1st = '先行';
+const player2nd = '後攻';
 
 // プレイヤー情報
 const playerInfomations = {
-  "先行" : {
+  先行: {
     mark: '〇',
     color: 'text-skyblue',
     image: {
       normal: './images/face_man.png',
       win: './images/face_man_win.png',
-      lose: './images/face_man_lose.png'
-    }
+      lose: './images/face_man_lose.png',
+    },
   },
-  "後攻" : {
+  後攻: {
     mark: '×',
     color: 'text-pink',
     image: {
       normal: './images/face_woman.png',
       win: './images/face_woman_win.png',
-      lose: './images/face_woman_lose.png'
-    }
-  }
+      lose: './images/face_woman_lose.png',
+    },
+  },
 };
 
 // 勝利判定マップ(最後にマークされた場所に関連するセルを列挙)
 // r => row, c => column
 const victoryJudgeMap = {
-  "r1c1": [
-    ["r1c1", "r1c2", "r1c3"],  // →
-    ["r1c1", "r2c1", "r3c1"],  // ↓
-    ["r1c1", "r2c2", "r3c3"],  // ↘
+  r1c1: [
+    ['r1c1', 'r1c2', 'r1c3'], // →
+    ['r1c1', 'r2c1', 'r3c1'], // ↓
+    ['r1c1', 'r2c2', 'r3c3'], // ↘
   ],
-  "r1c2": [
-    ["r1c1", "r1c2", "r1c3"],  // →
-    ["r1c2", "r2c2", "r3c2"],  // ↓
+  r1c2: [
+    ['r1c1', 'r1c2', 'r1c3'], // →
+    ['r1c2', 'r2c2', 'r3c2'], // ↓
   ],
-  "r1c3": [
-    ["r1c1", "r1c2", "r1c3"],  // →
-    ["r1c3", "r2c3", "r3c3"],  // ↓
-    ["r1c3", "r2c2", "r3c1"],  // ↙
+  r1c3: [
+    ['r1c1', 'r1c2', 'r1c3'], // →
+    ['r1c3', 'r2c3', 'r3c3'], // ↓
+    ['r1c3', 'r2c2', 'r3c1'], // ↙
   ],
-  "r2c1": [
-    ["r2c1", "r2c2", "r2c3"],  // →
-    ["r1c1", "r2c1", "r3c1"],  // ↓
+  r2c1: [
+    ['r2c1', 'r2c2', 'r2c3'], // →
+    ['r1c1', 'r2c1', 'r3c1'], // ↓
   ],
-  "r2c2": [
-    ["r2c1", "r2c2", "r2c3"],  // →
-    ["r1c2", "r2c2", "r3c2"],  // ↓
-    ["r1c1", "r2c2", "r3c3"],  // ↘
-    ["r1c3", "r2c2", "r3c1"],  // ↙
+  r2c2: [
+    ['r2c1', 'r2c2', 'r2c3'], // →
+    ['r1c2', 'r2c2', 'r3c2'], // ↓
+    ['r1c1', 'r2c2', 'r3c3'], // ↘
+    ['r1c3', 'r2c2', 'r3c1'], // ↙
   ],
-  "r2c3": [
-    ["r2c1", "r2c2", "r2c3"],  // →
-    ["r1c3", "r2c3", "r3c3"],  // ↓
+  r2c3: [
+    ['r2c1', 'r2c2', 'r2c3'], // →
+    ['r1c3', 'r2c3', 'r3c3'], // ↓
   ],
-  "r3c1": [
-    ["r3c1", "r3c2", "r3c3"],  // →
-    ["r1c1", "r2c1", "r3c1"],  // ↓
-    ["r1c3", "r2c2", "r3c1"],  // ↙
+  r3c1: [
+    ['r3c1', 'r3c2', 'r3c3'], // →
+    ['r1c1', 'r2c1', 'r3c1'], // ↓
+    ['r1c3', 'r2c2', 'r3c1'], // ↙
   ],
-  "r3c2": [
-    ["r3c1", "r3c2", "r3c3"],  // →
-    ["r1c2", "r2c2", "r3c2"],  // ↓
+  r3c2: [
+    ['r3c1', 'r3c2', 'r3c3'], // →
+    ['r1c2', 'r2c2', 'r3c2'], // ↓
   ],
-  "r3c3": [
-    ["r3c1", "r3c2", "r3c3"],  // →
-    ["r1c3", "r2c3", "r3c3"],  // ↓
-    ["r1c1", "r2c2", "r3c3"],  // ↘
-  ]
-}
+  r3c3: [
+    ['r3c1', 'r3c2', 'r3c3'], // →
+    ['r1c3', 'r2c3', 'r3c3'], // ↓
+    ['r1c1', 'r2c2', 'r3c3'], // ↘
+  ],
+};
 
 // 手番プレイヤー
 let ternPlayer = player1st;
@@ -77,10 +77,10 @@ let ternPlayer = player1st;
 let isGameOver = false;
 
 // 引き分けカウンター
-let drawCounter = 9;
+let tieCounter = 9;
 
 // ウィンドウが読み込まれたときに実行する処理
-$(function() {
+$(function () {
   init();
 
   let cell = null;
@@ -115,33 +115,33 @@ $(function() {
 });
 
 // 初期化処理
-const init = function() {
+function init() {
   let cell = null;
 
   cell = $('#r1c1');
   initCell(cell);
-  
+
   cell = $('#r1c2');
   initCell(cell);
-  
+
   cell = $('#r1c3');
   initCell(cell);
-  
+
   cell = $('#r2c1');
   initCell(cell);
-  
+
   cell = $('#r2c2');
   initCell(cell);
-  
+
   cell = $('#r2c3');
   initCell(cell);
 
   cell = $('#r3c1');
   initCell(cell);
-  
+
   cell = $('#r3c2');
   initCell(cell);
-  
+
   cell = $('#r3c3');
   initCell(cell);
 
@@ -163,21 +163,23 @@ const init = function() {
 }
 
 // セルの初期化処理
-// 
+//
 // @param cell 〇×ゲームのマス
-const initCell = function(cell) {
+function initCell(cell) {
   cell.attr('data-mark', '');
+  cell.removeClass('text-skyblue');
+  cell.removeClass('text-pink');
 }
 
 // セルをクリックしたときに実行する処理
-const onClickCellHandler = function() {
+function onClickCellHandler() {
   // ゲーム終了後はマークできない
   if (isGameOver) {
     return;
   }
 
   // マーク済みのセルはマークできない
-  if ($(this).attr('data-mark') !== '') {
+  if (isMarked(this)) {
     return;
   }
 
@@ -186,7 +188,7 @@ const onClickCellHandler = function() {
   $(this).addClass(playerInfomations[ternPlayer].color);
 
   // 勝利判定
-  if(isVictory($(this).attr('id'))) {
+  if (isVictory($(this).attr('id'))) {
     isGameOver = true;
     $('#main').addClass('bg-confetti');
 
@@ -201,15 +203,12 @@ const onClickCellHandler = function() {
       $('#img-player2').attr('src', playerInfomations[player2nd].image.win);
     }
 
-    return; 
+    return;
   }
 
-  // 勝敗が付いていない場合は引き分けカウンターを減らす
-  drawCounter--;
-  if (drawCounter <= 0) {
+  // 引き分けたらゲーム終了
+  if (isTied()) {
     isGameOver = true;
-
-    // 0になったら引き分け
     $('#info').text('引き分けです');
   }
 
@@ -218,26 +217,38 @@ const onClickCellHandler = function() {
 }
 
 // プレイヤー交代処理
-const changePlayer = function() {
-  if (ternPlayer === player1st) {
-    ternPlayer = player2nd;
-  }
-  else {
-    ternPlayer = player1st;
-  }
+function changePlayer() {
+  // Bug 2. 最初の1回しかプレイヤーが変わりません！
+  ternPlayer = (ternPlayer === player1st ? player2nd : player1st);
+}
+
+// マーク済み判定
+// クリックしたセルにマークがあるかどうかを返します。
+//
+// @param clickedCell クリックしたセル
+// @return boolean マークの有無
+function isMarked(clickedCell) {
+  // Bug 3. マークが上書きできてしまいます！
+  return $(clickedCell).attr('data-mark') !== '';
+}
+
+// 引き分け判定
+function isTied() {
+  // Bug 4. 全てのマスを埋めても引き分けになりません！
+  return tieCounter <= 0;
 }
 
 // 勝利判定
-// 
+//
 // @param markedCellId マークしたセルのID
 // @return boolean 勝敗判定
-const isVictory = function(markedCellId) {
+function isVictory(markedCellId) {
   // 定義した方向へ勝利判定を繰り返し、1方向でも条件を満たしていれば決着
-  return victoryJudgeMap[markedCellId].some(direction => {
+  return victoryJudgeMap[markedCellId].some((direction) => {
     let marks = [];
 
     // 判定方向に応じたマークを取得
-    direction.forEach(cellId => {
+    direction.forEach((cellId) => {
       marks.push($('#' + cellId).attr('data-mark'));
     });
 
