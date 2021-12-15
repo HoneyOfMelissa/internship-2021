@@ -234,6 +234,9 @@ function isMarked(clickedCell) {
 
 // 引き分け判定
 function isTied() {
+  // 引き分けカウンターをデクリメント
+  tieCounter--;
+
   // Bug 4. 全てのマスを埋めても引き分けになりません！
   return tieCounter <= 0;
 }
