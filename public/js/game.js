@@ -156,10 +156,13 @@ function init() {
   isGameOver = false;
 
   // 勝利演出を消す
-  $('body').removeClass('confetti');
+  $('#main').removeClass('bg-confetti');
 
   // メッセージを消す
   $('#info').text('');
+
+  // Bug 6. リセットした後、おかしなタイミングで引き分け判定になります！
+  tieCounter = 9;
 }
 
 // セルの初期化処理
